@@ -11,6 +11,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">💛</div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#historia" class="nav-link active">Historia</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#galeria" class="nav-link">Galería</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#juegos" class="nav-link">Juegos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Floating Hearts Background -->
     <div class="hearts-container">
         <div class="heart heart-1"></div>
@@ -20,8 +43,10 @@
         <div class="heart heart-5"></div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- HISTORIA SECTION -->
+    <section id="historia" class="page-section active">
+        <!-- Hero Section -->
+        <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title">Cómo me enamoré de ti</h1>
             <div class="scroll-indicator">
@@ -514,6 +539,229 @@
             </div>
         </div>
     </section>
+    </section>
+    <!-- END HISTORIA SECTION -->
+
+    <!-- GALERIA SECTION -->
+    <section id="galeria" class="page-section">
+        <div class="section-header">
+            <h2 class="section-title">Nuestra Galería</h2>
+            <p class="section-subtitle">Momentos especiales capturados en el tiempo</p>
+        </div>
+        
+        <div class="gallery-container">
+            <div class="gallery-grid">
+                <!-- Foto 1 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 1</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 2 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 2</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 3 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 3</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 4 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 4</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 5 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 5</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 6 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 6</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 7 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 7</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 8 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 8</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 9 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 9</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 10 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 10</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 11 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 11</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+                
+                <!-- Foto 12 -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <span>Foto 12</span>
+                    </div>
+                    <div class="gallery-caption">DESCRIPCIÓN AQUÍ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para ver fotos en grande -->
+        <div class="gallery-modal" id="galleryModal">
+            <span class="modal-close">&times;</span>
+            <img class="modal-content" id="modalImage">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </section>
+    <!-- END GALERIA SECTION -->
+
+    <!-- JUEGOS SECTION -->
+    <section id="juegos" class="page-section">
+        <div class="section-header">
+            <h2 class="section-title">Juegos del Amor</h2>
+            <p class="section-subtitle">Pon a prueba cuánto nos conocemos</p>
+        </div>
+
+        <div class="games-container">
+            <!-- Quiz Game -->
+            <div class="game-card">
+                <h3 class="game-title">💘 Quiz del Amor</h3>
+                <p class="game-description">Responde preguntas sobre nuestra relación</p>
+                <button class="game-button" onclick="startQuiz()">Comenzar Quiz</button>
+            </div>
+
+            <!-- Quiz Container (hidden initially) -->
+            <div id="quizContainer" class="quiz-container" style="display: none;">
+                <div class="quiz-header">
+                    <h3>Quiz del Amor</h3>
+                    <div class="quiz-progress">
+                        <span id="quizQuestion">Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">5</span></span>
+                        <span id="quizScore">Puntuación: <span id="score">0</span></span>
+                    </div>
+                </div>
+                <div class="quiz-content">
+                    <h4 id="questionText" class="question-text"></h4>
+                    <div id="answersContainer" class="answers-container"></div>
+                </div>
+                <button id="nextButton" class="game-button" style="display: none;" onclick="nextQuestion()">Siguiente</button>
+                <button id="restartQuiz" class="game-button" style="display: none;" onclick="restartQuiz()">Volver a jugar</button>
+            </div>
+
+            <!-- Tierlist Game -->
+            <div class="game-card">
+                <h3 class="game-title">🍽️ Tierlist de Restaurantes</h3>
+                <p class="game-description">Organiza los lugares donde hemos comido</p>
+                <button class="game-button" onclick="startTierlist()">Abrir Tierlist</button>
+            </div>
+
+            <!-- Tierlist Container (hidden initially) -->
+            <div id="tierlistContainer" class="tierlist-container" style="display: none;">
+                <div class="tierlist-header">
+                    <h3>Tierlist de Restaurantes</h3>
+                    <button class="close-button" onclick="closeTierlist()">×</button>
+                </div>
+                <div class="tierlist-content">
+                    <div class="tier-row tier-s">
+                        <div class="tier-label" style="background: #ff4757;">S</div>
+                        <div class="tier-items" data-tier="S"></div>
+                    </div>
+                    <div class="tier-row tier-a">
+                        <div class="tier-label" style="background: #ffa502;">A</div>
+                        <div class="tier-items" data-tier="A"></div>
+                    </div>
+                    <div class="tier-row tier-b">
+                        <div class="tier-label" style="background: #ffd32a;">B</div>
+                        <div class="tier-items" data-tier="B"></div>
+                    </div>
+                    <div class="tier-row tier-c">
+                        <div class="tier-label" style="background: #70a1ff;">C</div>
+                        <div class="tier-items" data-tier="C"></div>
+                    </div>
+                    <div class="tier-row tier-d">
+                        <div class="tier-label" style="background: #a4a4a4;">D</div>
+                        <div class="tier-items" data-tier="D"></div>
+                    </div>
+                    <div class="restaurants-pool">
+                        <h4>Restaurantes:</h4>
+                        <div id="restaurantsContainer" class="restaurants-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Clicker Game -->
+            <div class="game-card">
+                <h3 class="game-title">📖 Historia Interactiva</h3>
+                <p class="game-description">Revive nuestra historia con cada click</p>
+                <button class="game-button" onclick="startStoryGame()">Comenzar Historia</button>
+            </div>
+
+            <!-- Story Game Container (hidden initially) -->
+            <div id="storyGameContainer" class="story-game-container" style="display: none;">
+                <div class="story-display">
+                    <div class="story-image" id="storyImage">
+                        <div class="story-placeholder">
+                            <span>💝</span>
+                        </div>
+                    </div>
+                    <div class="story-text-box">
+                        <p id="storyText" class="story-text">Haz click para comenzar nuestra historia...</p>
+                        <div class="click-indicator">▼ Click para continuar</div>
+                    </div>
+                    <div class="story-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="storyProgress"></div>
+                        </div>
+                        <span id="storyCounter">0 / 10</span>
+                    </div>
+                </div>
+                <button class="close-button story-close" onclick="closeStoryGame()">×</button>
+            </div>
+        </div>
+    </section>
+    <!-- END JUEGOS SECTION -->
 
     <!-- Footer -->
     <footer class="footer">
