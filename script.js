@@ -41,29 +41,29 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== QUIZ GAME =====
 const quizQuestions = [
     {
-        question: "PREGUNTA 1 AQUÍ",
-        answers: ["Respuesta A", "Respuesta B", "Respuesta C", "Respuesta D"],
+        question: "¿Cuál es mi color favorito?",
+        answers: ["Rojo", "Verde", "Amarillo", "Morado vegetil"],
         correct: 0 // índice de la respuesta correcta
     },
     {
-        question: "PREGUNTA 2 AQUÍ",
-        answers: ["Respuesta A", "Respuesta B", "Respuesta C", "Respuesta D"],
-        correct: 1
-    },
-    {
-        question: "PREGUNTA 3 AQUÍ",
-        answers: ["Respuesta A", "Respuesta B", "Respuesta C", "Respuesta D"],
+        question: "Como norma general, en una vía interurbana la parada y el estacionamiento se realizarán...",
+        answers: ["siempre fuera de la calzada, en el lado derecho de la misma y dejando libre la parte transitable del arcén.", "en el arcén, cuando sea transitable y suficiente.", "¿Cómo, disculpa?", "siempre en el arcén."],
         correct: 2
     },
     {
-        question: "PREGUNTA 4 AQUÍ",
-        answers: ["Respuesta A", "Respuesta B", "Respuesta C", "Respuesta D"],
-        correct: 0
+        question: "¿Qué dijo Álvaro antes de lanzarse la primera vez?",
+        answers: ["Ven pa' aquí que te voy a comer to' el boquino", "Guapa tú", "Iulius pater romanus est", "Salió a la disco a bailar una diva virtual... chequea como se menea"],
+        correct: 1
     },
     {
-        question: "PREGUNTA 5 AQUÍ",
-        answers: ["Respuesta A", "Respuesta B", "Respuesta C", "Respuesta D"],
+        question: "Sigue la canción en la que Ainhoa siempre se equivoca: Navegando en mi automóvil hablando con la nena por el móvil dime que vamos a hacer...",
+        answers: ["si quieres yo te busco me puedes coquetear mientras conduzco dale que te quiero ver", "si quieres te seduzco te puedo regalar un buen molusco no me lo puedo creer", "linda mujer sabes que te amo de la cabeza a los pies y si quieres un castillo dorado eso te daré", "si quieres yo te busco me puedes bellaquear mientras conduzco dale que te quiero ver"],
         correct: 3
+    },
+    {
+        question: "¿Cómo se llamaba el restaurante de la primera cita?",
+        answers: ["La Rosa", "Restaurante Chino Shangai", "艾尼霍阿", "Domino's Pizza"],
+        correct: 1
     }
 ];
 
