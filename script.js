@@ -277,25 +277,69 @@ function closeStoryGame() {
 }
 
 // ===== GALLERY MODAL =====
+// Variables globales del modal
+let modal, modalImg, modalCaption, closeModal;
+
+// Función para abrir modal (global)
+function openImageModal(imgSrc, altText) {
+    if (!modal) return;
+    modal.classList.add('active');
+    modalImg.src = imgSrc;
+    modalCaption.textContent = altText || '';
+    document.body.style.overflow = 'hidden'; // Prevenir scroll
+}
+
+// Función para cerrar modal (global)
+function closeImageModal() {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restaurar scroll
+}
+
+// Añadir event listeners a las fotos de la timeline (global)
+function setupTimelineImages() {
+    const timelineImages = document.querySelectorAll('.timeline-image img, .timeline-content img');
+    
+    timelineImages.forEach(img => {
+        // Hacer que el contenedor sea clickeable
+        const container = img.closest('.timeline-image') || img.parentElement;
+        
+        // Evitar añadir múltiples event listeners
+        if (container.dataset.modalSetup === 'true') return;
+        container.dataset.modalSetup = 'true';
+        
+        // Añadir cursor pointer
+        container.style.cursor = 'pointer';
+        
+        // Añadir efecto hover
+        container.addEventListener('mouseenter', function() {
+            if (img.complete && img.naturalWidth > 0) {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.3s ease';
+            }
+        });
+        
+        container.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+        
+        // Añadir click para abrir modal
+        container.addEventListener('click', function(e) {
+            e.stopPropagation(); // Evitar que se active el evento del timeline-item
+            
+            if (img && img.complete && img.naturalWidth > 0) {
+                // La imagen existe y está cargada
+                openImageModal(img.src, img.alt || 'Foto de la timeline');
+            }
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('galleryModal');
-    const modalImg = document.getElementById('modalImage');
-    const modalCaption = document.getElementById('modalCaption');
-    const closeModal = document.querySelector('.modal-close');
-    
-    // Función para abrir modal
-    function openModal(imgSrc, altText) {
-        modal.classList.add('active');
-        modalImg.src = imgSrc;
-        modalCaption.textContent = altText || '';
-        document.body.style.overflow = 'hidden'; // Prevenir scroll
-    }
-    
-    // Función para cerrar modal
-    function closeModalFunc() {
-        modal.classList.remove('active');
-        document.body.style.overflow = ''; // Restaurar scroll
-    }
+    modal = document.getElementById('galleryModal');
+    modalImg = document.getElementById('modalImage');
+    modalCaption = document.getElementById('modalCaption');
+    closeModal = document.querySelector('.modal-close');
     
     // Añadir event listeners a las fotos cuando se carguen
     function setupGalleryItems() {
@@ -308,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (img && img.complete && img.naturalWidth > 0) {
                     // La imagen existe y está cargada
                     const caption = this.querySelector('.gallery-caption');
-                    openModal(img.src, caption ? caption.textContent : img.alt);
+                    openImageModal(img.src, caption ? caption.textContent : img.alt);
                 }
             });
         });
@@ -316,24 +360,28 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Configurar items inicialmente
     setupGalleryItems();
+    setupTimelineImages();
     
     // Reconfigurar cuando cambie de sección (por si acaso)
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
-            setTimeout(setupGalleryItems, 100);
+            setTimeout(() => {
+                setupGalleryItems();
+                setupTimelineImages();
+            }, 100);
         });
     });
     
     // Cerrar con botón X
     if (closeModal) {
-        closeModal.addEventListener('click', closeModalFunc);
+        closeModal.addEventListener('click', closeImageModal);
     }
     
     // Cerrar al hacer click fuera de la imagen
     if (modal) {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
-                closeModalFunc();
+                closeImageModal();
             }
         });
     }
@@ -341,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cerrar con tecla ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModalFunc();
+            closeImageModal();
         }
     });
 });
@@ -366,7 +414,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observar todos los items de la timeline
 document.addEventListener('DOMContentLoaded', () => {
-    const timelineItems = document.querySelectorAll('.timeline-item:not(.mallorca-item)');
+    const timelineItems = document.querySelectorAll('.timeline-item:not(.mallorca-item):not(.sevilla-item)');
     timelineItems.forEach(item => {
         observer.observe(item);
     });
@@ -452,6 +500,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para manejar la carga de imágenes
     setupImageHandling();
+    
+    // Reconfigurar imágenes de timeline después de un breve delay (para imágenes que cargan tarde)
+    setTimeout(() => {
+        if (typeof setupTimelineImages === 'function') {
+            setupTimelineImages();
+        }
+    }, 1000);
+    
+    // Observer para detectar cuando se añaden nuevas imágenes
+    const imageObserver = new MutationObserver(() => {
+        if (typeof setupTimelineImages === 'function') {
+            setupTimelineImages();
+        }
+    });
+    
+    // Observar cambios en las secciones de timeline
+    document.querySelectorAll('.timeline-section, .sevilla-section, .mallorca-section').forEach(section => {
+        imageObserver.observe(section, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['src']
+        });
+    });
 });
 
 // Manejo de imágenes (para cuando el usuario añada sus propias fotos)
@@ -470,22 +542,6 @@ function setupImageHandling() {
         }
     });
 }
-
-// Efecto de hover mejorado para las imágenes
-document.addEventListener('DOMContentLoaded', () => {
-    const images = document.querySelectorAll('.timeline-image');
-    
-    images.forEach(image => {
-        image.addEventListener('mouseenter', function() {
-            this.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-            this.style.transform = 'scale(1.03)';
-        });
-        
-        image.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
-});
 
 // Easter egg: Click en el corazón del footer
 document.addEventListener('DOMContentLoaded', () => {
