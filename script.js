@@ -278,38 +278,72 @@ function closeStoryGame() {
 
 // ===== GALLERY MODAL =====
 document.addEventListener('DOMContentLoaded', () => {
-    const galleryItems = document.querySelectorAll('.gallery-item');
     const modal = document.getElementById('galleryModal');
     const modalImg = document.getElementById('modalImage');
     const modalCaption = document.getElementById('modalCaption');
     const closeModal = document.querySelector('.modal-close');
     
-    galleryItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const img = this.querySelector('img');
-            const caption = this.querySelector('.gallery-caption').textContent;
-            
-            if (img) {
-                modal.classList.add('active');
-                modalImg.src = img.src;
-                modalCaption.textContent = caption;
-            }
+    // Función para abrir modal
+    function openModal(imgSrc, altText) {
+        modal.classList.add('active');
+        modalImg.src = imgSrc;
+        modalCaption.textContent = altText || '';
+        document.body.style.overflow = 'hidden'; // Prevenir scroll
+    }
+    
+    // Función para cerrar modal
+    function closeModalFunc() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restaurar scroll
+    }
+    
+    // Añadir event listeners a las fotos cuando se carguen
+    function setupGalleryItems() {
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                
+                if (img && img.complete && img.naturalWidth > 0) {
+                    // La imagen existe y está cargada
+                    const caption = this.querySelector('.gallery-caption');
+                    openModal(img.src, caption ? caption.textContent : img.alt);
+                }
+            });
+        });
+    }
+    
+    // Configurar items inicialmente
+    setupGalleryItems();
+    
+    // Reconfigurar cuando cambie de sección (por si acaso)
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(setupGalleryItems, 100);
         });
     });
     
+    // Cerrar con botón X
     if (closeModal) {
-        closeModal.addEventListener('click', () => {
-            modal.classList.remove('active');
-        });
+        closeModal.addEventListener('click', closeModalFunc);
     }
     
+    // Cerrar al hacer click fuera de la imagen
     if (modal) {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
-                modal.classList.remove('active');
+                closeModalFunc();
             }
         });
     }
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModalFunc();
+        }
+    });
 });
 
 // Intersection Observer para animaciones de timeline
