@@ -471,6 +471,212 @@ body {
     box-shadow: 0 0 0 8px var(--cream), 0 0 20px rgba(196, 30, 58, 0.4);
 }
 
+/* Sevilla Feria Special Section */
+.sevilla-section {
+    position: relative;
+    padding: 8rem 2rem;
+    background: white;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Patrón de lunares rojos */
+.sevilla-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle, var(--red-accent) 12px, transparent 12px),
+        radial-gradient(circle, var(--red-light) 8px, transparent 8px);
+    background-size: 120px 120px, 80px 80px;
+    background-position: 0 0, 60px 60px;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+/* Degradado sutil para dar profundidad */
+.sevilla-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 245, 230, 0.7) 50%,
+        rgba(255, 255, 255, 0.9) 100%
+    );
+    z-index: 2;
+}
+
+/* Decoraciones de faroles */
+.sevilla-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.farol {
+    position: absolute;
+    font-size: 3rem;
+    filter: drop-shadow(0 4px 10px rgba(255, 200, 0, 0.5));
+    animation: swingFarol 3s ease-in-out infinite;
+}
+
+.farol-1 {
+    top: 5%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.farol-2 {
+    top: 5%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.farol-3 {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 2s;
+}
+
+@keyframes swingFarol {
+    0%, 100% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+.flamenco-dancer {
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    font-size: 4rem;
+    animation: flamencoDance 2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 10px rgba(196, 30, 58, 0.3));
+}
+
+@keyframes flamencoDance {
+    0%, 100% {
+        transform: rotate(-5deg) translateY(0);
+    }
+    25% {
+        transform: rotate(5deg) translateY(-10px);
+    }
+    50% {
+        transform: rotate(-3deg) translateY(0);
+    }
+    75% {
+        transform: rotate(3deg) translateY(-5px);
+    }
+}
+
+.sevilla-content {
+    position: relative;
+    z-index: 4;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.sevilla-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--red-primary);
+    text-align: center;
+    text-shadow: 
+        2px 2px 0 white,
+        -2px -2px 0 white,
+        2px -2px 0 white,
+        -2px 2px 0 white,
+        0 4px 20px rgba(196, 30, 58, 0.3);
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease-out;
+    position: relative;
+}
+
+.sevilla-title::before {
+    content: '🌹';
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+}
+
+.sevilla-title::after {
+    content: '🌹';
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%) scaleX(-1);
+    font-size: 2.5rem;
+}
+
+.sevilla-item {
+    opacity: 0;
+    animation: fadeInUp 1.2s ease-out 0.5s forwards;
+}
+
+.sevilla-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 4px solid var(--red-accent);
+    box-shadow: 
+        0 20px 60px rgba(196, 30, 58, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    position: relative;
+}
+
+.sevilla-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        var(--red-primary),
+        var(--red-accent),
+        var(--red-primary)
+    );
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.sevilla-card .timeline-title {
+    color: var(--red-primary);
+    text-shadow: 
+        1px 1px 0 white,
+        -1px -1px 0 white,
+        1px -1px 0 white,
+        -1px 1px 0 white;
+}
+
+.sevilla-card .timeline-date {
+    color: var(--red-primary);
+    font-weight: 700;
+}
+
+.sevilla-card .timeline-text {
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
 /* Mallorca Special Section */
 .mallorca-section {
     position: relative;
@@ -1248,6 +1454,20 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
     }
+
+    .sevilla-title::before,
+    .sevilla-title::after {
+        display: none;
+    }
+
+    .farol {
+        font-size: 2rem;
+    }
+
+    .flamenco-dancer {
+        font-size: 3rem;
+        bottom: 5%;
+    }
 }
 
 @media (max-width: 640px) {
@@ -1305,5 +1525,28 @@ body {
 
     .gallery-quote p {
         font-size: 1.5rem;
+    }
+
+    .sevilla-section {
+        padding: 5rem 1rem;
+    }
+
+    .sevilla-title {
+        font-size: 2.5rem;
+    }
+
+    .sevilla-section::before {
+        background-size: 80px 80px, 50px 50px;
+        background-position: 0 0, 40px 40px;
+    }
+
+    .farol {
+        font-size: 1.5rem;
+    }
+
+    .flamenco-dancer {
+        font-size: 2.5rem;
+        bottom: 3%;
+        right: 3%;
     }
 }

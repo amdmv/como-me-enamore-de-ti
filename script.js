@@ -371,6 +371,36 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(item);
     });
 
+    // Observador especial para la sección de Sevilla
+    const sevillaObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Trigger decorations animation
+                const decorations = document.querySelectorAll('.sevilla-decorations .farol, .flamenco-dancer');
+                decorations.forEach((deco, index) => {
+                    setTimeout(() => {
+                        deco.style.opacity = '1';
+                        deco.style.transform = 'scale(1)';
+                    }, index * 200);
+                });
+                sevillaObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    const sevillaSection = document.querySelector('.sevilla-section');
+    if (sevillaSection) {
+        sevillaObserver.observe(sevillaSection);
+        // Set initial state for decorations
+        const decorations = document.querySelectorAll('.sevilla-decorations .farol, .flamenco-dancer');
+        decorations.forEach(deco => {
+            deco.style.opacity = '0';
+            deco.style.transform = 'scale(0)';
+            deco.style.transition = 'all 0.5s ease';
+        });
+    }
+
     // Observador especial para la sección de Mallorca
     const mallorcaObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
