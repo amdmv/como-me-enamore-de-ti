@@ -308,6 +308,225 @@ body {
     }
 }
 
+/* Love Counter Section */
+.love-counter-section {
+    position: relative;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--cream) 0%, white 50%, var(--cream) 100%);
+    z-index: 1;
+}
+
+.counter-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 30px;
+    box-shadow: 0 15px 50px rgba(196, 30, 58, 0.15);
+    border: 3px solid var(--red-light);
+}
+
+.counter-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--red-primary);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 10px rgba(196, 30, 58, 0.2);
+}
+
+.counter-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.counter-number {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: bold;
+    color: var(--red-primary);
+    line-height: 1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.counter-label {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.counter-separator {
+    font-size: 2rem;
+    animation: heartbeat 2s infinite;
+}
+
+.counter-subtitle {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    font-style: italic;
+}
+
+.counter-subtitle span {
+    color: var(--red-accent);
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Easter Eggs */
+.easter-egg-trigger {
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.easter-egg-trigger:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.easter-egg-trigger::after {
+    content: '🔍';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.easter-egg-trigger:hover::after {
+    opacity: 1;
+}
+
+.easter-egg-hidden {
+    position: fixed;
+    font-size: 2rem;
+    z-index: 100;
+    animation: float 3s ease-in-out infinite;
+}
+
+.easter-egg-hidden[data-easteregg="3"] {
+    bottom: 20%;
+    left: 5%;
+}
+
+.easter-egg-hidden[data-easteregg="4"] {
+    top: 30%;
+    right: 8%;
+}
+
+.easter-egg-hidden[data-easteregg="5"] {
+    bottom: 40%;
+    right: 15%;
+}
+
+.easter-egg-hidden[data-easteregg="6"] {
+    top: 60%;
+    left: 10%;
+}
+
+.easter-egg-trigger.found {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Easter Egg Modal */
+.easteregg-modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    animation: fadeIn 0.3s ease;
+}
+
+.easteregg-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.easteregg-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    animation: zoomIn 0.5s ease;
+}
+
+.easteregg-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.easteregg-close:hover {
+    color: var(--red-accent);
+    transform: rotate(90deg);
+}
+
+.easteregg-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    color: var(--red-primary);
+    margin-bottom: 1.5rem;
+}
+
+.easteregg-image-container {
+    margin: 1.5rem 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.easteregg-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.easteregg-counter {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.easteregg-counter span {
+    color: var(--red-accent);
+    font-size: 1.5rem;
+}
+
 /* Intro Section */
 .intro-section {
     position: relative;
@@ -1562,6 +1781,38 @@ body {
 
     .gallery-quote p {
         font-size: 1.5rem;
+    }
+
+    .counter-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .counter-display {
+        gap: 1rem;
+    }
+
+    .counter-number {
+        font-size: 2.5rem;
+    }
+
+    .counter-label {
+        font-size: 0.9rem;
+    }
+
+    .counter-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .easter-egg-hidden {
+        font-size: 1.5rem;
+    }
+
+    .easteregg-content {
+        padding: 1.5rem;
+    }
+
+    .easteregg-title {
+        font-size: 2rem;
     }
 
     .sevilla-section {

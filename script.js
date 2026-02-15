@@ -1,3 +1,155 @@
+// ===== LOVE COUNTER =====
+function updateLoveCounter() {
+    const startDate = new Date('2025-04-15T00:00:00');
+    const now = new Date();
+    
+    // Calcular diferencia en milisegundos
+    const diff = now - startDate;
+    
+    // Convertir a días totales
+    const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+    
+    // Calcular años, meses y días
+    let tempDate = new Date(startDate);
+    let years = 0;
+    let months = 0;
+    let days = 0;
+    
+    // Calcular años completos
+    while (tempDate.setFullYear(tempDate.getFullYear() + 1) <= now) {
+        years++;
+    }
+    tempDate.setFullYear(tempDate.getFullYear() - 1);
+    
+    // Calcular meses completos
+    while (tempDate.setMonth(tempDate.getMonth() + 1) <= now) {
+        months++;
+    }
+    tempDate.setMonth(tempDate.getMonth() - 1);
+    
+    // Calcular días restantes
+    days = Math.floor((now - tempDate) / (1000 * 60 * 60 * 24));
+    
+    // Actualizar el DOM
+    document.getElementById('years').textContent = years;
+    document.getElementById('months').textContent = months;
+    document.getElementById('days').textContent = days;
+    document.getElementById('totalDays').textContent = totalDays;
+}
+
+// Actualizar contador cada segundo
+setInterval(updateLoveCounter, 1000);
+updateLoveCounter(); // Llamada inicial
+
+// ===== EASTER EGGS =====
+const foundEasterEggs = new Set();
+const totalEasterEggs = 6;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const easterEggTriggers = document.querySelectorAll('.easter-egg-trigger');
+    const easterEggModal = document.getElementById('easterEggModal');
+    const easterEggImage = document.getElementById('easterEggImage');
+    const easterEggClose = document.querySelector('.easteregg-close');
+    const eggCounter = document.getElementById('eggCounter');
+    
+    // Configurar triggers de easter eggs
+    easterEggTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const eggNumber = this.getAttribute('data-easteregg');
+            
+            if (!foundEasterEggs.has(eggNumber)) {
+                foundEasterEggs.add(eggNumber);
+                this.classList.add('found');
+                
+                // Mostrar modal con imagen
+                easterEggImage.src = `fotos/easteregg (${eggNumber}).jpeg`;
+                easterEggModal.classList.add('active');
+                eggCounter.textContent = foundEasterEggs.size;
+                document.body.style.overflow = 'hidden';
+                
+                // Animación de confeti
+                createConfetti();
+                
+                // Guardar en localStorage
+                localStorage.setItem('foundEasterEggs', JSON.stringify([...foundEasterEggs]));
+            }
+        });
+    });
+    
+    // Cerrar modal
+    if (easterEggClose) {
+        easterEggClose.addEventListener('click', closeEasterEggModal);
+    }
+    
+    if (easterEggModal) {
+        easterEggModal.addEventListener('click', (e) => {
+            if (e.target === easterEggModal) {
+                closeEasterEggModal();
+            }
+        });
+    }
+    
+    // Cargar easter eggs encontrados previamente
+    const savedEggs = localStorage.getItem('foundEasterEggs');
+    if (savedEggs) {
+        const saved = JSON.parse(savedEggs);
+        saved.forEach(eggNum => {
+            foundEasterEggs.add(eggNum);
+            const trigger = document.querySelector(`[data-easteregg="${eggNum}"]`);
+            if (trigger) trigger.classList.add('found');
+        });
+        eggCounter.textContent = foundEasterEggs.size;
+    }
+});
+
+function closeEasterEggModal() {
+    const modal = document.getElementById('easterEggModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function createConfetti() {
+    const colors = ['#FFD700', '#FF69B4', '#87CEEB', '#98FB98', '#DDA0DD'];
+    const confettiCount = 50;
+    
+    for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-10px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.zIndex = '9999';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confetti.style.animation = `confettiFall ${2 + Math.random() * 2}s linear forwards`;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 4000);
+        }, i * 30);
+    }
+}
+
+// Añadir animación de confeti
+const confettiStyle = document.createElement('style');
+confettiStyle.textContent = `
+    @keyframes confettiFall {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(confettiStyle);
+
 // ===== NAVIGATION MENU =====
 document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('navToggle');
@@ -147,14 +299,16 @@ function restartQuiz() {
 
 // ===== TIERLIST GAME =====
 const restaurants = [
-    "RESTAURANTE 1",
-    "RESTAURANTE 2",
-    "RESTAURANTE 3",
-    "RESTAURANTE 4",
-    "RESTAURANTE 5",
-    "RESTAURANTE 6",
-    "RESTAURANTE 7",
-    "RESTAURANTE 8"
+    "MYA SUSHI",
+    "Chino de la Rosa",
+    "Muerde la Pasta",
+    "Wok",
+    "100 Montaditos",
+    "Ciao",
+    "Five Guys",
+    "Taco Bell",
+    "McDonald's",
+    "Kebab Estrella"
 ];
 
 function startTierlist() {
@@ -226,16 +380,14 @@ function closeTierlist() {
 
 // ===== STORY GAME =====
 const storySegments = [
-    { text: "TEXTO DE LA HISTORIA 1 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 2 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 3 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 4 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 5 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 6 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 7 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 8 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 9 AQUÍ", image: null },
-    { text: "TEXTO DE LA HISTORIA 10 AQUÍ - FIN", image: null }
+    { text: "Ainhoa y Álvaro se conocieron de no muy buenas maneras.", image: "historia/1.jpg" },
+    { text: "Cayeron en la misma clase y ya se empezaron a llevar bien.", image: "historia/2.jpg" },
+    { text: "Volvieron a caer juntos pero se empezaron a llevar mejor...", image: "historia/3.jpg" },
+    { text: "Se enamoraron y se prometieron estar juntos para siempre.", image: "historia/4.jpg" },
+    { text: "Se mudaron juntos y comenzaron su vida independiente.", image: "historia/5.jpg" },
+    { text: "Se prometieron y se casaron en el día más bonito de sus vidas.", image: "historia/6.jpg" },
+    { text: "Tuvieron dos hijos y se convirtieron en las personas más felices del planeta.", image: "historia/7.jpg" },
+    { text: "Vivieron toda su vida juntos y envejecieron el uno al lado del otro como se prometieron de jóvenes.", image: "historia/8.jpg" }
 ];
 
 let currentStoryIndex = 0;
@@ -259,6 +411,16 @@ function updateStory() {
     const segment = storySegments[currentStoryIndex];
     document.getElementById('storyText').textContent = segment.text;
     
+    // Update image
+    const storyImageContainer = document.getElementById('storyImage');
+    if (segment.image) {
+        // Si hay imagen, mostrarla
+        storyImageContainer.innerHTML = `<img src="${segment.image}" alt="Historia ${currentStoryIndex + 1}" style="width: 100%; height: 100%; object-fit: contain;">`;
+    } else {
+        // Si no hay imagen, mostrar placeholder
+        storyImageContainer.innerHTML = '<div class="story-placeholder"><span>💝</span></div>';
+    }
+    
     // Update progress
     const progress = ((currentStoryIndex + 1) / storySegments.length) * 100;
     document.getElementById('storyProgress').style.width = progress + '%';
@@ -268,12 +430,19 @@ function updateStory() {
     // Hide click indicator on last segment
     if (currentStoryIndex === storySegments.length - 1) {
         document.querySelector('.click-indicator').style.display = 'none';
+    } else {
+        document.querySelector('.click-indicator').style.display = 'block';
     }
 }
 
 function closeStoryGame() {
     document.getElementById('storyGameContainer').style.display = 'none';
     currentStoryIndex = 0;
+    // Restaurar el indicador de click
+    const indicator = document.querySelector('.click-indicator');
+    if (indicator) {
+        indicator.style.display = 'block';
+    }
 }
 
 // ===== GALLERY MODAL =====
