@@ -900,7 +900,6 @@ body {
 }
 
 .gallery-placeholder::before {
-    content: '🖼️';
     font-size: 3rem;
     opacity: 0.3;
     position: absolute;
